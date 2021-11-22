@@ -1,0 +1,8 @@
+{% extends 'result/base.html' %}
+
+
+{% block content %}
+{% for object in object_list %}
+{{object.name}}
+{% endfor %}
+{% endblock %}
