@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres', 
-        'USER': 'postgres',
-        'PASSWORD': 'test',
+        'NAME': 'srms', 
+        'USER': 'rabind',
+        'PASSWORD': 'test123',
         'HOST': '127.0.0.1', 
         'PORT': '5432', 
     }
@@ -128,7 +128,7 @@ STATIC_URL = 'static/'
 STATIC_FILES_DIR = [ 
         os.path.join(BASE_DIR,"static"),
         ]
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
