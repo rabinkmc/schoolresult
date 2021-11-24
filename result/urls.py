@@ -20,6 +20,10 @@ urlpatterns = [
         path('student/create/', StudentCreateView.as_view(),name='student-create'), 
         path('subject/create/', SubjectCreateView.as_view(),name='subject-create'), 
         path('teacher/create/', TeacherCreateView.as_view(),name='teacher-create'), 
+
+        path('student/update/<int:pk>-<str:slug>/', StudentCreateView.as_view(),name='student-update'), 
+        path('subject/update/<int:pk>-<str:slug>/', SubjectCreateView.as_view(),name='subject-update'), 
+        path('teacher/update/<int:pk>-<str:slug>/', TeacherCreateView.as_view(),name='teacher-update'), 
         
         path('student/delete/<int:pk>-<str:slug>', StudentDeleteView.as_view(),name='student-delete'), 
         path('subject/delete/<int:pk>-<str:slug>', SubjectDeleteView.as_view(),name='subject-delete'), 

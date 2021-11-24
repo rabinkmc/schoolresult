@@ -1,11 +1,10 @@
 {% extends 'result/base.html' %}
 
 {% block content %}
-<span class="border border-primary">
-<ol class="alert alert-light">
+
+<ul class="list-group">
 {% for object in object_list %}
-	<li> <a href="{{ object.get_absolute_url }}">{{object.name}}</a></li>
+<li class="list-group-item bg-light"> <a class="text-dark" href="{{ object.get_absolute_url }}">{{object.name}}</a></li>
 {% endfor %}
-</ol>
-</span>
+</ul>
 {% endblock %}
