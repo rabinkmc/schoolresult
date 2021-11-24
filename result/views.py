@@ -10,6 +10,7 @@ def home(request):
 
 class StudentListView(ListView):
     model = Student
+    paginate_by = 10
 
 class SubjectListView(ListView):
     model = Subject
