@@ -1,8 +1,11 @@
 {% extends 'result/base.html' %}
 
-
 {% block content %}
+<span class="border border-primary">
+<ol class="alert alert-light">
 {% for object in object_list %}
-<a href="{{ object.get_absolute_url }}">{{object.name}}</a>
+	<li> <a href="{{ object.get_absolute_url }}">{{object.name}}</a></li>
 {% endfor %}
+</ol>
+</span>
 {% endblock %}

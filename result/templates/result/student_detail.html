@@ -1,5 +1,6 @@
 {% extends 'result/base.html' %}
-
 {% block content %}
-{{ object.name }}
+<h3>{{ object.name }}</h3>
+
+<a class="btn btn-danger"> href="{% url "student-delete" object.pk object.slug %}"> Delete </a>
 {% endblock %}

@@ -3,7 +3,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 
 class AbstractSlug(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(
             default='',
             editable=False,
