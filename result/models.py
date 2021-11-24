@@ -33,13 +33,15 @@ class AbstractSlug(models.Model):
 class Subject(AbstractSlug):
     ''
 
+class Teacher(AbstractSlug):
+    marks_file = models.FileField(upload_to='marks', default='marks.csv')
+    subject = models.OneToOneField(Subject, related_name='teacher', on_delete = models.CASCADE)
+
 class Student(AbstractSlug):
     image  = models.ImageField(upload_to='profile-pic-student', default='default.png')
     rollno = models.CharField(max_length=50)
-
-class Teacher(AbstractSlug):
-    marks_file = models.FileField(upload_to='marks', default='marks.csv')
-    subject = models.CharField(max_length=50)
+    teachers = models.ManyToManyField(Teacher, related_name='students')
+    subjects = models.ManyToManyField(Subject, related_name ='substudents')
 
 
 
