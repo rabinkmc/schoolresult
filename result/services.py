@@ -22,7 +22,7 @@ def get_marks_and_roll_number(filepath=marks_path):
         reader = csv.DictReader(f)
         for row in reader:
             rollno = row['rollno'] 
-            marks = row['marks']
+            marks = round(float(row['marks']),2)
             markslist_with_rollno[rollno] = marks
     return markslist_with_rollno
 
@@ -52,7 +52,7 @@ def set_marks_in_Student(subject, marks_file_path=marks_path):
     marks_from_rollno = get_marks_and_roll_number(marks_file_path)
     for student in Student.objects.all():
         rollno = student.rollno
-        marks = round(float(marks_from_rollno.get(rollno)),2)
+        marks = marks_from_rollno.get(rollno)
         setattr(student,subject,marks)
         student.save()
 

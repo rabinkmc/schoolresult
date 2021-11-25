@@ -63,3 +63,24 @@ class SubjectUpdateView(UpdateView):
 class TeacherUpdateView(UpdateView):
     model = Teacher
     form_class = TeacherForm
+
+def result(request,**kwargs):
+    rollno = kwargs['rollno'] 
+    student = Student.objects.get(rollno=rollno)
+    context = {}
+    
+    try : 
+        total = student.english + student.science + student.social + student.maths + student.nepali
+    except: 
+        total = None
+
+    context['student'] = student
+    context['total'] = total 
+    context['percentage'] = total / 5
+
+    return render(request, 'result/result.html', context)
+
+
+    context = {}
+    if request.method == 'POST'
+
