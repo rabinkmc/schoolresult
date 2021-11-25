@@ -3,6 +3,8 @@
 {% block content %}
 
 <h3 class="alert alert-primary">{{object.name}}</h3>
+<h4 class="alert alert-secondary">subject: {{object.subject.name}}</h4>
+<h4 class="alert alert-secondary">filepath: {{object.marks_file.path}}</h4>
 <div>
 <a class="btn btn-primary" href="{% url "teacher-update" object.pk object.slug %}"> Update</a>
 <a class="btn btn-danger" href="{% url "teacher-delete" object.pk object.slug %}"> Delete </a>

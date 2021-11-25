@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy
 
 from result.models import Student, Teacher, Subject
+from result.forms import StudentForm,TeacherForm, SubjectForm
 
 def home(request):
     return render(request, 'result/home.html')
@@ -29,15 +30,15 @@ class SubjectDetailView(DetailView):
 
 class StudentCreateView(CreateView):
     model = Student
-    fields = ['image','name','rollno','teachers', 'subjects'] 
+    form_class = StudentForm
 
 class SubjectCreateView(CreateView):
     model = Subject
-    fields = ['name']
+    form_class = SubjectForm
 
 class TeacherCreateView(CreateView):
     model = Teacher
-    fields = ['name','marks_file','subject']
+    form_class = TeacherForm
 
 class StudentDeleteView(DeleteView):
     model = Student
@@ -53,15 +54,12 @@ class TeacherDeleteView(DeleteView):
 
 class StudentUpdateView(UpdateView):
     model = Student
-    template_name_suffix = '_update_form'
-    fields = ['image','name','rollno','teachers', 'subjects'] 
+    form_class = StudentForm
 
 class SubjectUpdateView(UpdateView):
     model = Subject
-    template_name_suffix = '_update_form'
-    fields = ['name']
+    form_class = SubjectForm
 
 class TeacherUpdateView(UpdateView):
     model = Teacher
-    template_name_suffix = '_update_form'
-    fields = ['name','marks_file','subject']
+    form_class = TeacherForm
