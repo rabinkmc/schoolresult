@@ -2,16 +2,18 @@
 {% block content %}
 
 <h3 class="alert alert-primary">{{object.name}}</h3>
+<h4 class="alert alert-secondary">rollno: {{object.rollno}}</h4>
 <h4 class="alert alert-secondary">english: {{object.english}}</h4>
 <h4 class="alert alert-secondary">nepali: {{object.nepali}}</h4>
 <h4 class="alert alert-secondary">maths: {{object.maths}}</h4>
 <h4 class="alert alert-secondary">science: {{object.science}}</h4>
-<h4 class="alert alert-secondary">english: {{object.english}}</h4>
+<h4 class="alert alert-secondary">social: {{object.social}}</h4>
 <div>
 <a class="btn btn-primary" href="{% url "student-update" object.pk object.slug %}"> Update </a>
 <a class="btn btn-danger" href="{% url "student-delete" object.pk object.slug %}"> Delete </a>
 </div>
 
+<a href="{% url "result" student.id student.slug%}">result</a>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
 <!-- <div class="card"> -->

@@ -56,6 +56,34 @@ def set_marks_in_Student(subject, marks_file_path=marks_path):
         setattr(student,subject,marks)
         student.save()
 
+def set_marks_in_Student(subject, marks_file_path=marks_path):
+    marks_from_rollno = get_marks_and_roll_number(marks_file_path)
+    for student in Student.objects.all():
+        rollno = student.rollno
+        marks = marks_from_rollno.get(rollno)
+        setattr(student,subject,marks)
+        student.save()
+
+def get_result(student):
+    try:
+        subs = [ student.english , student.nepali , student.science , student.social , student.maths ] 
+        fail = any(subject < 32 for subject in subs)
+        marks = sum(subs)
+        percentage = '*' if fail else marks/len(subs)
+
+    except:
+        marks = None
+        percentage = None
+
+    return (marks, percentage)
+
+def load_marks(*args,**kwargs):
+    teacher = Teacher.objects.get(*args,**kwargs)
+    marksfilepath = teacher.marks_file.path
+    subject = teacher.subject.name
 
 
 
+
+    
+    

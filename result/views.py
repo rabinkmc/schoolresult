@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import DetailView,ListView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy
 
 from result.models import Student, Teacher, Subject
 from result.forms import StudentForm,TeacherForm, SubjectForm
+from result.services import get_result
 
 def home(request):
     return render(request, 'result/home.html')
@@ -64,23 +65,22 @@ class TeacherUpdateView(UpdateView):
     model = Teacher
     form_class = TeacherForm
 
-def result(request,**kwargs):
-    rollno = kwargs['rollno'] 
-    student = Student.objects.get(rollno=rollno)
+def result(request, *args, **kwargs):
+    student = Student.objects.get(**kwargs)
     context = {}
-    
-    try : 
-        total = student.english + student.science + student.social + student.maths + student.nepali
-    except: 
-        total = None
-
     context['student'] = student
-    context['total'] = total 
-    context['percentage'] = total / 5
+    context['marks'],context['percentage'] = get_result(student)
 
     return render(request, 'result/result.html', context)
 
+def loadmarks(request, *args, **kwargs):
+    teacher = Teacher.objects.get(*args, **kwargs)
+    for arg in args:
+        print('args:',arg)
 
-    context = {}
-    if request.method == 'POST'
+    for kwarg in kwargs: 
+        print('kwargs:',kwarg)
 
+    
+    
+    return redirect(teacher)

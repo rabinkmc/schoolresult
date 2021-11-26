@@ -48,7 +48,7 @@ class Student(AbstractNameSlug):
     nepali =  models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
     social =  models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
     science = models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    result = models.ForeignKey('Result', on_delete=models.CASCADE, blank=True,null=True)
+    # result = models.ForeignKey('Result', on_delete=models.CASCADE, blank=True,null=True)
 
 # class Marks(models.Model):
 #     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='sub_marks')
