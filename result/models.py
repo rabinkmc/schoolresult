@@ -12,6 +12,7 @@ class AbstractNameSlug(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['name']
 
     def get_absolute_url(self):
         kwargs = { 

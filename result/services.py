@@ -58,12 +58,14 @@ def set_marks_in_Student(subject, marks_file_path=marks_path):
 
 def set_marks_in_Student(subject, marks_file_path=marks_path):
     marks_from_rollno = get_marks_and_roll_number(marks_file_path)
-    for student in Student.objects.all():
-        rollno = student.rollno
-        marks = marks_from_rollno.get(rollno)
+    for roll,marks in marks_from_rollno.items():
+        student = Student.objects.get(rollno=roll.lower())
         setattr(student,subject,marks)
         student.save()
 
+#again this get_result is a function specific to model, but i also don't
+# want to add extra methods to my model
+# i can test this function independent of the model
 def get_result(student):
     try:
         subs = [ student.english , student.nepali , student.science , student.social , student.maths ] 
@@ -77,10 +79,10 @@ def get_result(student):
 
     return (marks, percentage)
 
-def load_marks(*args,**kwargs):
-    teacher = Teacher.objects.get(*args,**kwargs)
-    marksfilepath = teacher.marks_file.path
-    subject = teacher.subject.name
+# def load_student_marks(*args,**kwargs):
+#     marksfilepath = teacher.marks_file.path
+#     subject = teacher.subject.name
+#     set_marks_in_Student(subject, marksfilepath)
 
 
 

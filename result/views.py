@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 from result.models import Student, Teacher, Subject
 from result.forms import StudentForm,TeacherForm, SubjectForm
-from result.services import get_result
+from result.services import get_result, set_marks_in_Student
 
 def home(request):
     return render(request, 'result/home.html')
@@ -73,14 +73,10 @@ def result(request, *args, **kwargs):
 
     return render(request, 'result/result.html', context)
 
-def loadmarks(request, *args, **kwargs):
-    teacher = Teacher.objects.get(*args, **kwargs)
-    for arg in args:
-        print('args:',arg)
-
-    for kwarg in kwargs: 
-        print('kwargs:',kwarg)
-
-    
-    
+    # this view is specific to teacher, need a better way to do this
+def loadmarks(request, *args, **kwargs): 
+    teacher = Teacher.objects.get(*args,**kwargs)
+    subject = teacher.subject.name
+    marksfilepath  = teacher.marks_file.path
+    set_marks_in_Student(subject,marksfilepath)
     return redirect(teacher)
