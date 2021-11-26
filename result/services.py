@@ -48,13 +48,13 @@ def load_students_in_Student(students_name_with_rollno):
     for student in students_name_with_rollno:
         Student.objects.create(**student)
 
-def set_marks_in_Student(subject, marks_file_path=marks_path):
-    marks_from_rollno = get_marks_and_roll_number(marks_file_path)
-    for student in Student.objects.all():
-        rollno = student.rollno
-        marks = marks_from_rollno.get(rollno)
-        setattr(student,subject,marks)
-        student.save()
+# def set_marks_in_Student(subject, marks_file_path=marks_path):
+#     marks_from_rollno = get_marks_and_roll_number(marks_file_path)
+#     for student in Student.objects.all():
+#         rollno = student.rollno
+#         marks = marks_from_rollno.get(rollno)
+#         setattr(student,subject,marks)
+#         student.save()
 
 def set_marks_in_Student(subject, marks_file_path=marks_path):
     marks_from_rollno = get_marks_and_roll_number(marks_file_path)

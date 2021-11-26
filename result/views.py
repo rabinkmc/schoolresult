@@ -68,7 +68,7 @@ class TeacherUpdateView(UpdateView):
 def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)
     context = {}
-    context['student'] = student
+    context['object'] = student
     context['marks'],context['percentage'] = get_result(student)
 
     return render(request, 'result/result.html', context)

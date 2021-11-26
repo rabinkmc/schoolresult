@@ -29,7 +29,6 @@ urlpatterns = [
         path('teacher/delete/<int:pk>-<str:slug>', views.TeacherDeleteView.as_view(),name='teacher-delete'), 
 
         path('result/<int:pk>-<str:slug>/', views.result, name='result'), 
-
 ] 
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
