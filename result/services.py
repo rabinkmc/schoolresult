@@ -7,13 +7,14 @@ marks_path  = os.path.join(MEDIA_ROOT ,'marks.csv')
 students_name_path  = os.path.join(MEDIA_ROOT ,'student.csv')
 
 def get_student_and_rollnumber(filepath=students_name_path):
-    students_name_with_rollno = {}
+    students_name_with_rollno = []
     with open(filepath, "r", newline='') as f: 
         reader = csv.DictReader(f)
         for row in reader:
             name = row['name']
             rollno = row['rollno']
-            students_name_with_rollno[name] = rollno
+            info = { 'name': name, 'rollno':rollno } 
+            students_name_with_rollno[name].append(info)
     return students_name_with_rollno
 
 def get_marks_and_roll_number(filepath=marks_path):
