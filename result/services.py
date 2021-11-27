@@ -4,28 +4,40 @@ from result.models import Student, Teacher, Subject
 from core.settings import MEDIA_ROOT
 
 marks_path  = os.path.join(MEDIA_ROOT ,'marks.csv')
-students_name_path  = os.path.join(MEDIA_ROOT ,'student.csv')
+student_file  = os.path.join(MEDIA_ROOT ,'student.csv')
 
-def get_student_and_rollnumber(filepath=students_name_path):
-    students_name_with_rollno = []
+def read_csv(file):
+    with open(file,"r",newline='') as f:
+        reader = csv.DictReader(f)
+        fields = reader.fieldnames
+        filedict = {}
+        key = fields[0]
+        value = fields[1]
+        for row in reader:
+            filedict.update({ row[key]:row[value] } )
+
+        return filedict
+            
+def get_student(filepath=student_file):
+    students = []
     with open(filepath, "r", newline='') as f: 
         reader = csv.DictReader(f)
         for row in reader:
             name = row['name']
             rollno = row['rollno']
             info = { 'name': name, 'rollno':rollno } 
-            students_name_with_rollno[name].append(info)
-    return students_name_with_rollno
+            students.append(info)
+    return students
 
-def get_marks_and_roll_number(filepath=marks_path):
-    markslist_with_rollno = {}
+def get_marks(filepath=marks_path):
+    marks = {}
     with open(filepath, "r", newline='') as f: 
         reader = csv.DictReader(f)
         for row in reader:
             rollno = row['rollno'] 
             marks = round(float(row['marks']),2)
-            markslist_with_rollno[rollno] = marks
-    return markslist_with_rollno
+            marks[rollno] = marks
+    return marks
 
 teachersList = ['Doleshwor Niraula', 'Santosh Bhattarai', 'Prem Thapa','Nirajan Thapa', 'Rakesh Mahat']
 teachers = [ {'name': teacher } for teacher in teachersList] 
@@ -37,31 +49,23 @@ subjects = [{'name':'maths'},
             {'name':'social'}
             ] 
 
-def load_subjects_in_Subject():
+def load_subjects():
     for subject in subjects:
         Subject.objects.create(**subject)
 
-def load_teachers_in_Teacher():
+def load_teachers():
     for teacher,subject in zip(teachers,Subject.objects.all()):
         Teacher.objects.create(**teacher, subject=subject)
 
-def load_students_in_Student(students_name_with_rollno):
-    for student in students_name_with_rollno:
+def load_students(students=get_student(student_file)):
+    for student in students:
         Student.objects.create(**student)
 
-# def set_marks_in_Student(subject, marks_file_path=marks_path):
-#     marks_from_rollno = get_marks_and_roll_number(marks_file_path)
-#     for student in Student.objects.all():
-#         rollno = student.rollno
-#         marks = marks_from_rollno.get(rollno)
-#         setattr(student,subject,marks)
-#         student.save()
-
-def set_marks_in_Student(subject, marks_file_path=marks_path):
-    marks_from_rollno = get_marks_and_roll_number(marks_file_path)
-    for roll,marks in marks_from_rollno.items():
-        student = Student.objects.get(rollno=roll.lower())
-        setattr(student,subject,marks)
+def set_marks(subject, marks_file_path=marks_path):
+    marks = get_marks(marks_file_path)
+    for roll,mark in marks.items():
+        student = Student.objects.get(rollno=roll)
+        setattr(student,subject,mark)
         student.save()
 
 #again this get_result is a function specific to model, but i also don't
@@ -79,11 +83,6 @@ def get_result(student):
         percentage = None
 
     return (marks, percentage)
-
-# def load_student_marks(*args,**kwargs):
-#     marksfilepath = teacher.marks_file.path
-#     subject = teacher.subject.name
-#     set_marks_in_Student(subject, marksfilepath)
 
 
 
