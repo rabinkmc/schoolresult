@@ -11,66 +11,33 @@ def read_csv(file):
         reader = csv.DictReader(f)
         fields = reader.fieldnames
         filedict = {}
-        key = fields[0]
-        value = fields[1]
+        key,value = fields[0],fields[1]
         for row in reader:
             filedict.update({ row[key]:row[value] } )
 
         return filedict
             
-def get_student(filepath=student_file):
-    students = []
-    with open(filepath, "r", newline='') as f: 
-        reader = csv.DictReader(f)
-        for row in reader:
-            name = row['name']
-            rollno = row['rollno']
-            info = { 'name': name, 'rollno':rollno } 
-            students.append(info)
-    return students
-
-def get_marks(filepath=marks_path):
-    marks = {}
-    with open(filepath, "r", newline='') as f: 
-        reader = csv.DictReader(f)
-        for row in reader:
-            rollno = row['rollno'] 
-            marks = round(float(row['marks']),2)
-            marks[rollno] = marks
-    return marks
-
-teachersList = ['Doleshwor Niraula', 'Santosh Bhattarai', 'Prem Thapa','Nirajan Thapa', 'Rakesh Mahat']
-teachers = [ {'name': teacher } for teacher in teachersList] 
-
-subjects = [{'name':'maths'},
-            {'name':'nepali'},
-            {'name':'english'}, 
-            {'name':'science'}, 
-            {'name':'social'}
-            ] 
-
-def load_subjects():
+subjects_name = ['english','maths','nepali','science','social']
+def load_subjects( subjects=subjects_name ):
     for subject in subjects:
-        Subject.objects.create(**subject)
+        Subject.objects.create(name = subject)
 
-def load_teachers():
+teachers_name = ['Doleshwor Niraula', 'Santosh Bhattarai', 'Prem Thapa','Nirajan Thapa', 'Rakesh Mahat']
+def load_teachers( teachers=teachers_name ):
     for teacher,subject in zip(teachers,Subject.objects.all()):
-        Teacher.objects.create(**teacher, subject=subject)
+        Teacher.objects.create(name=teacher, subject=subject)
 
-def load_students(students=get_student(student_file)):
-    for student in students:
-        Student.objects.create(**student)
+def load_students( students = read_csv(student_file) ):
+    for name,rollno in students.items():
+        Student.objects.create(name=name,rollno=rollno)
 
-def set_marks(subject, marks_file_path=marks_path):
-    marks = get_marks(marks_file_path)
+def set_marks( subject, marks = read_csv(marks_path) ):
     for roll,mark in marks.items():
+        mark = round(float(mark),2)
         student = Student.objects.get(rollno=roll)
         setattr(student,subject,mark)
         student.save()
 
-#again this get_result is a function specific to model, but i also don't
-# want to add extra methods to my model
-# i can test this function independent of the model
 def get_result(student):
     try:
         subs = [ student.english , student.nepali , student.science , student.social , student.maths ] 
@@ -83,9 +50,4 @@ def get_result(student):
         percentage = None
 
     return (marks, percentage)
-
-
-
-
-    
     

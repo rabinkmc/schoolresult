@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 from result.models import Student, Teacher, Subject
 from result.forms import StudentForm,TeacherForm, SubjectForm
-from result.services import get_result, set_marks_in_Student
+from result.services import get_result, set_marks
 
 def home(request):
     return render(request, 'result/home.html')
