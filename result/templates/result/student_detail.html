@@ -83,55 +83,19 @@
                     </div>
                   </div>
                   <hr>
+				  {% for subject in object.mark_set.all %}
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">english</h6>
+                      <h6 class="mb-0">
+						{{subject.subject.name}}
+					  </h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-						{{object.english}}
+						{{subject.marks}}
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">science</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-						{{object.science}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">maths</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-						{{object.maths}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">social</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-						{{object.social}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">nepali</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-						{{object.nepali}}
-                    </div>
-                  </div>
-				  <hr>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="#" >Edit</a> </div>
-                  </div>
+				  {% endfor %}
                 </div>
               </div>
 

@@ -42,9 +42,9 @@ class TeacherCreateView(CreateView):
     model = Teacher
     form_class = TeacherForm
 
-    def form_valid(self,form):
-        self.get_records()
-        return super().form_valid(form)
+    # def get_success_url(self):
+    #     self.object.get_records()
+    #     return super().get_success_url(self)
 
 class StudentDeleteView(DeleteView):
     model = Student
@@ -71,9 +71,9 @@ class TeacherUpdateView(UpdateView):
     model = Teacher
     form_class = TeacherForm
 
-    def form_valid(self,form):
-        self.get_records()
-        return super().form_valid(form)
+    # def get_success_url(self):
+    #     self.object.get_records()
+    #     return super().get_success_url(self)
 
 def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)
@@ -81,8 +81,8 @@ def result(request, *args, **kwargs):
     context = {}
     context['object'] = student
     context['subjects'] = student.mark_set.all()
-    context['marks'] = student.mark_set.aggregate(Sum('marks'))
-    context['percentage'] = student.mark_set.aggregate(Avg('marks'))
+    context['marks'] = student.mark_set.aggregate(marks = Sum('marks')).get('marks')
+    context['percentage'] = round(student.mark_set.aggregate(total =Avg('marks')).get('total'),2)
 
     return render(request, 'result/result.html', context)
 

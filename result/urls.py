@@ -18,7 +18,6 @@ urlpatterns = [
         path('student/create/', views.StudentCreateView.as_view(),name='student-create'), 
         path('subject/create/', views.SubjectCreateView.as_view(),name='subject-create'), 
         path('teacher/create/', views.TeacherCreateView.as_view(),name='teacher-create'), 
-        # path('teacher/loadmarks/<int:pk>-<str:slug>/', views.loadmarks, name='load-marks'), 
 
         path('student/update/<int:pk>-<str:slug>/', views.StudentUpdateView.as_view(),name='student-update'), 
         path('subject/update/<int:pk>-<str:slug>/', views.SubjectUpdateView.as_view(),name='subject-update'), 
@@ -30,5 +29,4 @@ urlpatterns = [
 
         path('result/<int:pk>-<str:slug>/', views.result, name='result'), 
 ] 
-# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

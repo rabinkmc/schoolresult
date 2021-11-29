@@ -36,6 +36,7 @@ class Subject(AbstractNameSlug):
     ''
 
 class Teacher(AbstractNameSlug):
+    image  = models.ImageField(upload_to='profile-pic-teacher', default='default.png')
     marks_file = models.FileField(upload_to='csv/', default='marks.csv')
     subject = models.OneToOneField(Subject, related_name='teacher', on_delete = models.CASCADE)
     records = {}
@@ -58,7 +59,6 @@ class Mark(models.Model):
      
      class Meta:
          unique_together=[['subject','student']]
-
 
      def save(self,*args,**kwargs):
          records = self.subject.teacher.get_records()
