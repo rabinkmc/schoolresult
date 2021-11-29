@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
-from result.services import read_csv
+from result.readcsv import read_csv
 
 class AbstractNameSlug(models.Model):
     name = models.CharField(max_length=100, unique=True)
