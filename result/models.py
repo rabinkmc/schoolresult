@@ -42,19 +42,19 @@ class Student(AbstractNameSlug):
     image  = models.ImageField(upload_to='profile-pic-student', default='default.png')
     rollno = models.CharField(max_length=50)
     teachers = models.ManyToManyField(Teacher, related_name='students')
-    # subjects = models.ManyToManyField(Subject, related_name ='substudents', through='Marks')
-    subjects = models.ManyToManyField(Subject, related_name ='substudents')
-    english = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
-    maths =   models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    nepali =  models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    social =  models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    science = models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    # result = models.ForeignKey('Result', on_delete=models.CASCADE, blank=True,null=True)
+    subjects = models.ManyToManyField(Subject, related_name ='stds', through='Marks')
+    # subjects = models.ManyToManyField(Subject, related_name ='substudents')
+    # english = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
+    # maths =   models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
+    # nepali =  models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
+    # social =  models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
+    # science = models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
+    # # result = models.ForeignKey('Result', on_delete=models.CASCADE, blank=True,null=True)
 
-# class Marks(models.Model):
-#     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='sub_marks')
-#     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='std_marks')
-#     marks = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
+class Marks(models.Model):
+     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='sub_marks')
+     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='std_marks')
+     marks = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
     
 # class Result(models.Model):
 #     total = models.DecimalField(null=True, blank=True)
