@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
+from result.services import read_csv
 
 class AbstractNameSlug(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -37,19 +38,33 @@ class Subject(AbstractNameSlug):
 class Teacher(AbstractNameSlug):
     marks_file = models.FileField(upload_to='csv/', default='marks.csv')
     subject = models.OneToOneField(Subject, related_name='teacher', on_delete = models.CASCADE)
+    records = {}
+
+    def get_records(self,*args,**kwargs):
+        self.records = read_csv(self.marks_file.path)
+        self.save()
+        return self.records
 
 class Student(AbstractNameSlug):
     image  = models.ImageField(upload_to='profile-pic-student', default='default.png')
-    rollno = models.CharField(max_length=50)
+    rollno = models.CharField(max_length=50, unique=True)
     teachers = models.ManyToManyField(Teacher, related_name='students')
-    subjects = models.ManyToManyField(Subject, related_name ='stds', through='Marks')
+    subjects = models.ManyToManyField(Subject, related_name ='substudents', through='Mark')
 
-class Marks(models.Model):
+class Mark(models.Model):
      subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='sub_marks')
      student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='std_marks')
      marks = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
+     
+     class Meta:
+         unique_together=[['subject','student']]
+
+
+     def save(self,*args,**kwargs):
+         records = self.subject.teacher.get_records()
+         self.marks = records.get(self.student.rollno)
+         super().save(*args,**kwargs)
+
+     def __str__(self):
+         return f"{self.student} in {self.subject}:{self.marks}"
     
-# class Result(models.Model):
-#     total = models.DecimalField(null=True, blank=True)
-
-
