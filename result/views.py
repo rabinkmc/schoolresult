@@ -2,11 +2,12 @@ from django.shortcuts import render,redirect
 from django.views.generic import DetailView,ListView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy
+from django.db.models import Sum,Count,Avg,Min,Max
 
 from result.models import Student, Teacher, Subject
 from result.forms import StudentForm,TeacherForm, SubjectForm
 from result.services import read_csv
-from result.service2 import get_result, set_marks 
+from result.service2 import set_marks 
 
 def home(request):
     return render(request, 'result/home.html')
@@ -68,9 +69,12 @@ class TeacherUpdateView(UpdateView):
 
 def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)
+
     context = {}
     context['object'] = student
-    context['marks'],context['percentage'] = get_result(student)
+    context['subjects'] = student.mark_set.all()
+    context['marks'] = student.mark_set.aggregate(Sum('marks'))
+    context['percentage'] = student.mark_set.aggregate(Avg('marks'))
 
     return render(request, 'result/result.html', context)
 

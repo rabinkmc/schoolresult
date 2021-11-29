@@ -29,16 +29,16 @@ def set_marks( subject, marks = read_csv(marks_path) ):
         setattr(student,subject,mark)
         student.save()
 
-def get_result(student):
-    try:
-        subs = [ student.english , student.nepali , student.science , student.social , student.maths ] 
-        fail = any(subject < 32 for subject in subs)
-        marks = sum(subs)
-        percentage = '*' if fail else marks/len(subs)
+# def get_result(student):
+#     try:
+#         subs = [ student.english , student.nepali , student.science , student.social , student.maths ] 
+#         fail = any(subject < 32 for subject in subs)
+#         marks = sum(subs)
+#         percentage = '*' if fail else marks/len(subs)
 
-    except:
-        marks = None
-        percentage = None
+#     except:
+#         marks = None
+#         percentage = None
 
-    return (marks, percentage)
+#     return (marks, percentage)
     

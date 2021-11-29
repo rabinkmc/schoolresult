@@ -52,8 +52,8 @@ class Student(AbstractNameSlug):
     subjects = models.ManyToManyField(Subject, related_name ='substudents', through='Mark')
 
 class Mark(models.Model):
-     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='sub_marks')
-     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='std_marks')
+     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)# related_name='sub_marks')
+     student = models.ForeignKey(Student, on_delete=models.CASCADE)# related_name='std_marks')
      marks = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
      
      class Meta:
@@ -66,5 +66,5 @@ class Mark(models.Model):
          super().save(*args,**kwargs)
 
      def __str__(self):
-         return f"{self.student} in {self.subject}:{self.marks}"
+         return f"({self.student},{self.subject}):{self.marks}"
     
