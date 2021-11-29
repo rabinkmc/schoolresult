@@ -43,13 +43,6 @@ class Student(AbstractNameSlug):
     rollno = models.CharField(max_length=50)
     teachers = models.ManyToManyField(Teacher, related_name='students')
     subjects = models.ManyToManyField(Subject, related_name ='stds', through='Marks')
-    # subjects = models.ManyToManyField(Subject, related_name ='substudents')
-    # english = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
-    # maths =   models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    # nepali =  models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    # social =  models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    # science = models.DecimalField(null=True, blank=True,max_digits=5, decimal_places=2)
-    # # result = models.ForeignKey('Result', on_delete=models.CASCADE, blank=True,null=True)
 
 class Marks(models.Model):
      subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='sub_marks')
