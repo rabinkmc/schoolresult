@@ -23,6 +23,7 @@ def load_subjects( subjects=subjects_name ):
         Subject.objects.create(name = subject)
 
 teachers_name = ['Doleshwor Niraula', 'Santosh Bhattarai', 'Prem Thapa','Nirajan Thapa', 'Rakesh Mahat']
+
 def load_teachers( teachers=teachers_name ):
     for teacher,subject in zip(teachers,Subject.objects.all()):
         Teacher.objects.create(name=teacher, subject=subject)
