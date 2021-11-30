@@ -3,6 +3,24 @@
 {% block content %}
 <div class="card mb-3">
                 <div class="card-body">
+			  <div class="row">
+				<div class="col-sm-3">
+					<h6 class="mb-0">Name</h6>
+				</div>
+				<div class="col-sm-9 text-secondary">
+					{{student.name}}
+				</div>
+			  </div>
+			  <hr>
+			  <div class="row">
+				<div class="col-sm-3">
+					<h6 class="mb-0">Roll no:</h6>
+				</div>
+				<div class="col-sm-9 text-secondary">
+					{{student.rollno}}
+				</div>
+			  </div>
+                  <hr>
 			{% for subject in subjects %}
                   <div class="row">
                     <div class="col-sm-3">

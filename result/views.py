@@ -79,7 +79,7 @@ def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)
 
     context = {}
-    context['object'] = student
+    context['student'] = student
     context['subjects'] = student.mark_set.all()
     context['marks'] = student.mark_set.aggregate(marks = Sum('marks')).get('marks')
     context['percentage'] = round(student.mark_set.aggregate(total =Avg('marks')).get('total'),2)
