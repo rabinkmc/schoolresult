@@ -23,10 +23,12 @@ urlpatterns = [
         path('subject/update/<int:pk>-<str:slug>/', views.SubjectUpdateView.as_view(),name='subject-update'), 
         path('teacher/update/<int:pk>-<str:slug>/', views.TeacherUpdateView.as_view(),name='teacher-update'), 
         
-        path('student/delete/<int:pk>-<str:slug>', views.StudentDeleteView.as_view(),name='student-delete'), 
-        path('subject/delete/<int:pk>-<str:slug>', views.SubjectDeleteView.as_view(),name='subject-delete'), 
-        path('teacher/delete/<int:pk>-<str:slug>', views.TeacherDeleteView.as_view(),name='teacher-delete'), 
+        path('student/delete/<int:pk>-<str:slug>/', views.StudentDeleteView.as_view(),name='student-delete'), 
+        path('subject/delete/<int:pk>-<str:slug>/', views.SubjectDeleteView.as_view(),name='subject-delete'), 
+        path('teacher/delete/<int:pk>-<str:slug>/', views.TeacherDeleteView.as_view(),name='teacher-delete'), 
 
         path('result/<int:pk>-<str:slug>/', views.result, name='result'), 
+        path('marks/create/', views.MarkCreateView.as_view(), name='add-marks'),
+        path('marks/update/<int:pk>/', views.MarkUpdateView.as_view(), name='update-marks'),
 ] 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

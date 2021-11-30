@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect
 from django.views.generic import DetailView,ListView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.db.models import Sum,Count,Avg,Min,Max
 
-from result.models import Student, Teacher, Subject
+from result.models import Student, Teacher, Subject,Mark
 from result.forms import StudentForm,TeacherForm, SubjectForm
 from result.readcsv import read_csv
 
@@ -71,9 +71,19 @@ class TeacherUpdateView(UpdateView):
     model = Teacher
     form_class = TeacherForm
 
-    # def get_success_url(self):
-    #     self.object.get_records()
-    #     return super().get_success_url(self)
+class MarkCreateView(CreateView):
+    model = Mark
+    fields =['subject', 'student', 'marks']
+    template_name = 'result/student_form.html'
+
+
+class MarkUpdateView(UpdateView):
+    model = Mark
+    fields =['subject', 'student', 'marks']
+    template_name = 'result/student_form.html'
+
+    success_url = reverse_lazy('student-list')
+
 
 def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)

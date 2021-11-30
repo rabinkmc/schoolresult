@@ -62,7 +62,11 @@ class Mark(models.Model):
 
      def save(self,*args,**kwargs):
          records = self.subject.teacher.get_records()
-         self.marks = records.get(self.student.rollno)
+         if self.marks is None:
+             try:
+                 self.marks = records.get(self.student.rollno)
+             except: 
+                 self.marks = None
          super().save(*args,**kwargs)
 
      def __str__(self):
