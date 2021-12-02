@@ -28,7 +28,18 @@ urlpatterns = [
         path('teacher/delete/<int:pk>-<str:slug>/', views.TeacherDeleteView.as_view(),name='teacher-delete'), 
 
         path('result/<int:pk>-<str:slug>/', views.result, name='result'), 
+
         path('marks/create/', views.MarkCreateView.as_view(), name='add-marks'),
         path('marks/update/<int:pk>/', views.MarkUpdateView.as_view(), name='update-marks'),
+
+        # drf 
+        path('api/v1/student/',  views.StudentList.as_view(),name='student-list'), 
+        path('api/v1/subject/',  views.SubjectList.as_view(),name='subject-list'), 
+        path('api/v1/teacher/',  views.TeacherList.as_view(),name='teacher-list'), 
+
+        path('api/v1/student/<int:pk>-<str:slug>/',  views.StudentDetail.as_view(), name='student-detail'), 
+        path('api/v1/subject/<int:pk>-<str:slug>/',  views.SubjectDetail.as_view(), name='subject-detail'), 
+        path('api/v1/teacher/<int:pk>-<str:slug>/',  views.TeacherDetail.as_view(), name='teacher-detail'), 
+
 ] 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
