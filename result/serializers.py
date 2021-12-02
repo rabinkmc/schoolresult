@@ -4,7 +4,7 @@ from rest_framework import serializers
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ['name']
+        fields = ['id','name']
 
 class TeacherSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(default='/media/default.png')
@@ -12,7 +12,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teacher
-        fields = ['pk', 'name', 'subject', 'marks_file','image']
+        fields = ['id', 'name', 'subject', 'marks_file','image']
         
 class StudentSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(default='media/default.png')
@@ -21,7 +21,7 @@ class StudentSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = Student
-        fields= ['name', 'rollno','teachers', 'subjects','image']
+        fields= ['id','name', 'rollno','teachers', 'subjects','image']
 
     def get_teachers(self, object):
         return object.teachers.all().values_list('name', flat=True)
@@ -33,6 +33,7 @@ class StudentSerializer(serializers.ModelSerializer):
 class MarkSerializer(serializers.ModelSerializer):
     subject = SubjectSerializer()
     student = StudentSerializer()
+
     class Meta:
         model = Mark
         fields = [ 'subject', 'student', 'marks' ] 

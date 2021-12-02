@@ -3,8 +3,11 @@ from django.views.generic import DetailView,ListView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy,reverse
 from django.db.models import Sum,Count,Avg,Min,Max
+from rest_framework import generics
 
 from result.models import Student, Teacher, Subject,Mark
+from result.serializers import StudentSerializer, TeacherSerializer, SubjectSerializer, MarkSerializer
+
 from result.forms import StudentForm,TeacherForm, SubjectForm
 from result.readcsv import read_csv
 
