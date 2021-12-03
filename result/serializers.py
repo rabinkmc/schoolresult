@@ -10,6 +10,7 @@ class SubjectSerializer(serializers.ModelSerializer):
 class TeacherSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(default='/media/default.png')
     marks_file = serializers.FileField(default='/media/marks.csv')
+    subject = serializers.StringRelatedField()
 
     class Meta:
         model = Teacher
