@@ -61,12 +61,15 @@ class Mark(models.Model):
          unique_together=[['subject','student']]
 
      def save(self,*args,**kwargs):
-         records = self.subject.teacher.get_records()
-         if self.marks is None:
-             try:
-                 self.marks = records.get(self.student.rollno)
-             except: 
-                 self.marks = None
+         file_name= self.subject.teacher.marks_file.name
+         if self.marks is None | file_name != 'marks.csv':
+             records = self.subject.teacher.get_records()
+             if self.marks is None | file_name is not 'marks.csv':
+                 try:
+                     self.marks = records.get(self.student.rollno)
+                 except: 
+                     self.marks = None
+
          super().save(*args,**kwargs)
 
      def __str__(self):

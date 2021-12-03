@@ -20,7 +20,19 @@ def load_students( students = read_csv(student_file) ):
     for name,rollno in students.items():
         Student.objects.create(name=name,rollno=rollno)
 
+def load_marks():
+    for student in Student.objects.all():
+        for subject in Subject.objects.all():
+            Mark.objects.create(student=student, subject=subject)
+
+
 def load_models():
     load_subjects()
     load_teachers()
     load_students()
+
+    for student in Student.objects.all():
+        for teacher in Teacher.objects.all():
+            student.teachers.add(teacher)
+            student.subjects.add(teacher.subject)
+

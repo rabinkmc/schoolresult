@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from django.db.models import Sum, Avg
 
 from result.models import Student, Teacher, Subject,Mark
-from result.serializers import StudentSerializer, TeacherSerializer, SubjectSerializer, MarkSerializer
+from result.serializers import StudentSerializer, TeacherSerializer, SubjectSerializer, MarkSerializer, ResultSerializer
 
 from result.forms import StudentForm,TeacherForm, SubjectForm
 from result.readcsv import read_csv
@@ -122,11 +122,8 @@ class Result(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-
         student = self.get_object(pk)
-        marks = Mark.objects.filter(student=student)
-        result_parameters = marks.aggregate(total=Sum('marks'), avg=Avg('marks'))
-        serializer = MarkSerializer(marks, many=True)
+        serializer = ResultSerializer(student)
         return Response(serializer.data)
 
 def result(request, *args, **kwargs):

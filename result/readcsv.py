@@ -9,7 +9,7 @@ def read_csv(file):
 
         for row in reader:
             key = row[key_column]
-            value = round(float(row[value_column]), 2)
+            value = row[value_column]
             filedict.update({key:value})
 
         return filedict
