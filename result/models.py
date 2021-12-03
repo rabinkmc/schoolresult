@@ -50,7 +50,7 @@ class Student(AbstractNameSlug):
     image  = models.ImageField(upload_to='profile-pic-student', default='default.png')
     rollno = models.CharField(max_length=50, unique=True)
     teachers = models.ManyToManyField(Teacher, related_name='students')
-    subjects = models.ManyToManyField(Subject, related_name ='substudents', through='Mark')
+    subjects = models.ManyToManyField(Subject, related_name ='students', through='Mark')
 
 class Mark(models.Model):
      subject = models.ForeignKey(Subject, on_delete=models.CASCADE)# related_name='sub_marks')
