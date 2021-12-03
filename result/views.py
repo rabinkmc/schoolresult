@@ -105,6 +105,7 @@ class TeacherList(generics.ListCreateAPIView):
 class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
+
     
 class SubjectList(generics.ListCreateAPIView):
     queryset = Subject.objects.all()
@@ -128,7 +129,6 @@ class Result(APIView):
 
 def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)
-
     context = {}
     context['student'] = student
     context['subjects'] = student.mark_set.all()

@@ -12,6 +12,8 @@ psycopg2 = "*"
 pillow = "*"
 requests = "*"
 notebook = "*"
+circus = "*"
+chaussette = "*"
 
 [dev-packages]
 ipython = "*"
