@@ -58,7 +58,7 @@ class Mark(models.Model):
      marks = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
      
      class Meta:
-         unique_together=[['subject','student']]
+         unique_together=['subject','student']
 
      def save(self,*args,**kwargs):
          file_name= self.subject.teacher.marks_file.name
