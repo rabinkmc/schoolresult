@@ -45,16 +45,20 @@ class ResultSerializer(serializers.ModelSerializer):
     percentage = serializers.SerializerMethodField()
     total = serializers.SerializerMethodField()
     subjects = serializers.SerializerMethodField()
+    # subjects = serializers.StringRelatedField(many=True)
+    # subjects = SubjectSerializer(many=True)
 
     class Meta:
         model = Student
         fields = ['id','name','subjects','percentage', 'total'] 
 
     def get_percentage(self,object):
-        return object.mark_set.aggregate(percentage=Avg('marks'))
+        percentage = object.mark_set.aggregate(percentage=Avg('marks'))
+        return percentage['percentage']
     
     def get_total(self,object):
-        return object.mark_set.aggregate(total =Sum('marks'))
+        sum = object.mark_set.aggregate(total =Sum('marks'))
+        return sum['total']
         
     def get_subjects(self, object):
         marksheet = object.mark_set.all()

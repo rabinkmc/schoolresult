@@ -62,13 +62,12 @@ class Mark(models.Model):
 
      def save(self,*args,**kwargs):
          file_name= self.subject.teacher.marks_file.name
-         if self.marks is None | file_name != 'marks.csv':
+         if file_name != 'marks.csv':
              records = self.subject.teacher.get_records()
-             if self.marks is None | file_name is not 'marks.csv':
-                 try:
-                     self.marks = records.get(self.student.rollno)
-                 except: 
-                     self.marks = None
+             try:
+                 self.marks = records.get(self.student.rollno)
+             except: 
+                 self.marks = None
 
          super().save(*args,**kwargs)
 
