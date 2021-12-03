@@ -10,7 +10,7 @@ class SubjectForm(ModelForm):
 class TeacherForm(ModelForm):
     class Meta:
         model = Teacher
-        fields = ['name','marks_file','subject']
+        fields = ['image','name','marks_file','subject']
 
 
 class StudentForm(ModelForm):

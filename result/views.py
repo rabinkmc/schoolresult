@@ -114,7 +114,7 @@ class SubjectDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
 
-class ResultApi(APIView):
+class Result(APIView):
     def get_object(self, pk):
         try:
             return Student.objects.get(pk=pk)
@@ -126,6 +126,7 @@ class ResultApi(APIView):
         student = self.get_object(pk)
         marks = Mark.objects.filter(student=student)
         result_parameters = marks.aggregate(total=Sum('marks'), avg=Avg('marks'))
+        serializer = MarkSerializer(marks, many=True)
         return Response(serializer.data)
 
 def result(request, *args, **kwargs):
