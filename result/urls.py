@@ -33,13 +33,13 @@ urlpatterns = [
         path('marks/update/<int:pk>/', views.MarkUpdateView.as_view(), name='update-marks'),
 
         # drf 
-        path('api/v1/students/',  views.StudentList.as_view(),name='student-list'), 
-        path('api/v1/subjects/',  views.SubjectList.as_view(),name='subject-list'), 
-        path('api/v1/teachers/',  views.TeacherList.as_view(),name='teacher-list'), 
+        path('api/v1/students/',  views.StudentList.as_view(),name='api-student-list'), 
+        path('api/v1/subjects/',  views.SubjectList.as_view(),name='api-subject-list'), 
+        path('api/v1/teachers/',  views.TeacherList.as_view(),name='api-teacher-list'), 
 
-        path('api/v1/student/<int:pk>-<str:slug>/',  views.StudentDetail.as_view(), name='student-detail'), 
-        path('api/v1/subject/<int:pk>-<str:slug>/',  views.SubjectDetail.as_view(), name='subject-detail'), 
-        path('api/v1/teacher/<int:pk>-<str:slug>/',  views.TeacherDetail.as_view(), name='teacher-detail'), 
+        path('api/v1/student/<int:pk>-<str:slug>/', views.StudentDetail.as_view(), name='api-student-detail'), 
+        path('api/v1/subject/<int:pk>-<str:slug>/', views.SubjectDetail.as_view(), name='api-subject-detail'), 
+        path('api/v1/teacher/<int:pk>-<str:slug>/', views.TeacherDetail.as_view(), name='api-teacher-detail'), 
 
 ] 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

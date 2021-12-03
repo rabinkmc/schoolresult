@@ -4,6 +4,9 @@ from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy,reverse
 from django.db.models import Sum,Count,Avg,Min,Max
 from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.db.models import Sum, Avg
 
 from result.models import Student, Teacher, Subject,Mark
 from result.serializers import StudentSerializer, TeacherSerializer, SubjectSerializer, MarkSerializer
@@ -110,6 +113,20 @@ class SubjectList(generics.ListCreateAPIView):
 class SubjectDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
+
+class ResultApi(APIView):
+    def get_object(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
+        except Student.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+
+        student = self.get_object(pk)
+        marks = Mark.objects.filter(student=student)
+        result_parameters = marks.aggregate(total=Sum('marks'), avg=Avg('marks'))
+        return Response(serializer.data)
 
 def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)

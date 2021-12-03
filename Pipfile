@@ -11,6 +11,7 @@ django-extensions = "*"
 psycopg2 = "*"
 pillow = "*"
 requests = "*"
+notebook = "*"
 
 [dev-packages]
 ipython = "*"

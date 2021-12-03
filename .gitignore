@@ -130,5 +130,3 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#custom
-result/migrations/0*.py
