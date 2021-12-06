@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404, get_list_or_404
 from django.views.generic import DetailView,ListView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy,reverse
@@ -7,6 +7,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.db.models import Sum, Avg
+from django.http import HttpResponse 
 
 from result.models import Student, Teacher, Subject,Mark
 from result.serializers import StudentSerializer, TeacherSerializer, SubjectSerializer, MarkSerializer, ResultSerializer
@@ -115,6 +116,7 @@ class SubjectDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
 
+
 class Result(APIView):
     def get_object(self, pk):
         try:
@@ -126,6 +128,20 @@ class Result(APIView):
         student = self.get_object(pk)
         serializer = ResultSerializer(student)
         return Response(serializer.data)
+
+def updatemarks(request, **kwargs):
+    '''
+    This view will be associated with teacher.
+
+    ideally i would want this to be a post save or save method , as soon
+    as teacher uploads the file, i want the marks to be changed. For
+    now, i will create a button.
+    '''
+
+    teacher =get_object_or_404(Teacher, pk=6)
+    return HttpResponse(f'<h1>{teacher}</h1>')
+
+
 
 def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)

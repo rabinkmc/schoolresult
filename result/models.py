@@ -62,12 +62,12 @@ class Mark(models.Model):
 
      def save(self,*args,**kwargs):
          file_name= self.subject.teacher.marks_file.name
-         if file_name != 'marks.csv':
+         # this is a cheap solution saying 'marks.csv' was the default,
+         # program should know there has been changes instead of
+         # hardcoding
+         if ((file_name != 'marks.csv') | (self.subject.teacher.records == {})): 
              records = self.subject.teacher.get_records()
-             try:
-                 self.marks = records.get(self.student.rollno)
-             except: 
-                 self.marks = None
+             self.marks = records.get(self.student.rollno)
 
          super().save(*args,**kwargs)
 

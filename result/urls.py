@@ -22,6 +22,7 @@ urlpatterns = [
         path('student/update/<int:pk>-<str:slug>/', views.StudentUpdateView.as_view(),name='student-update'), 
         path('subject/update/<int:pk>-<str:slug>/', views.SubjectUpdateView.as_view(),name='subject-update'), 
         path('teacher/update/<int:pk>-<str:slug>/', views.TeacherUpdateView.as_view(),name='teacher-update'), 
+        path('teacher/loadmarks/<int:pk>-<str:slug>/',views.updatemarks,name='teacher-loadmarks'), 
         
         path('student/delete/<int:pk>-<str:slug>/', views.StudentDeleteView.as_view(),name='student-delete'), 
         path('subject/delete/<int:pk>-<str:slug>/', views.SubjectDeleteView.as_view(),name='subject-delete'), 

@@ -33,20 +33,21 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class MarkSerializer(serializers.ModelSerializer):
-    subject = SubjectSerializer()
-    student = StudentSerializer()
-
+    subject =serializers.StringRelatedField()
+    student =serializers.StringRelatedField()
+    result = serializers.SerializerMethodField()
     class Meta:
         model = Mark
-        fields = [ 'subject', 'student', 'marks' ] 
+        fields = ['subject', 'student', 'marks', 'result'] 
+
+    def get_result(self, obj):
+        return self.context.get('result')
 
 
 class ResultSerializer(serializers.ModelSerializer):
     percentage = serializers.SerializerMethodField()
     total = serializers.SerializerMethodField()
     subjects = serializers.SerializerMethodField()
-    # subjects = serializers.StringRelatedField(many=True)
-    # subjects = SubjectSerializer(many=True)
 
     class Meta:
         model = Student
@@ -57,8 +58,8 @@ class ResultSerializer(serializers.ModelSerializer):
         return percentage['percentage']
     
     def get_total(self,object):
-        sum = object.mark_set.aggregate(total =Sum('marks'))
-        return sum['total']
+        total = object.mark_set.aggregate(total =Sum('marks'))
+        return total['total']
         
     def get_subjects(self, object):
         marksheet = object.mark_set.all()
