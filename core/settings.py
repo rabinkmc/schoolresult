@@ -25,7 +25,7 @@ SECRET_KEY = '%h(n_4elcc&anmkw10n+05pa=2#30igotylksnx@=)$j!b$az^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'corsheaders',
     'result', 
     'crispy_forms',
     'rest_framework',
@@ -55,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -135,7 +138,11 @@ STATIC_FILES_DIR = [
         os.path.join(BASE_DIR,"static"),
         ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+CORS_ALLOWED_ORIGINS = [
+        "https://127.0.0.1:8080",
+        "http://localhost:8080",
+        "https://localhost:3000",
+        ]

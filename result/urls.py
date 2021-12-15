@@ -1,6 +1,4 @@
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
 
 from result import views 
 
@@ -43,6 +41,5 @@ urlpatterns = [
         path('api/v1/teacher/<int:pk>-<str:slug>/', views.TeacherDetail.as_view(), name='api-teacher-detail'), 
 
         path('api/v1/result/<int:pk>/', views.Result.as_view(), name='api-result'),
-
+        path('api/v1/test/', views.TestDetail.as_view(), name='api-test'),
 ] 
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.urls import reverse
 from result.readcsv import read_csv
@@ -36,17 +37,16 @@ class Subject(AbstractNameSlug):
     ''
 
 class Teacher(AbstractNameSlug):
+    user = models.ForeignKey(User, related_name='teachers', on_delete=models.CASCADE) 
     image  = models.ImageField(upload_to='profile-pic-teacher', default='default.png')
     marks_file = models.FileField(upload_to='csv/', default='marks.csv')
     subject = models.OneToOneField(Subject, related_name='teacher', on_delete = models.CASCADE)
-    records = {}
 
-    def get_records(self,*args,**kwargs):
-        self.records = read_csv(self.marks_file.path)
-        self.save()
-        return self.records
+    def get_records(self):
+        return read_csv(self.marks_file.path)
 
 class Student(AbstractNameSlug):
+    user = models.ForeignKey(User, related_name='students', on_delete=models.CASCADE) 
     image  = models.ImageField(upload_to='profile-pic-student', default='default.png')
     rollno = models.CharField(max_length=50, unique=True)
     teachers = models.ManyToManyField(Teacher, related_name='students')
@@ -62,15 +62,17 @@ class Mark(models.Model):
 
      def save(self,*args,**kwargs):
          file_name= self.subject.teacher.marks_file.name
-         # this is a cheap solution saying 'marks.csv' was the default,
-         # program should know there has been changes instead of
-         # hardcoding
-         if ((file_name != 'marks.csv') | (self.subject.teacher.records == {})): 
+         try: 
              records = self.subject.teacher.get_records()
              self.marks = records.get(self.student.rollno)
+         except:
+             self.marks = None
 
          super().save(*args,**kwargs)
 
      def __str__(self):
          return f"{self.student},{self.subject}:{self.marks}"
     
+class TestModel(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)

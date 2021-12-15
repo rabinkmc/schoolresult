@@ -5,19 +5,17 @@ name = "pypi"
 
 [packages]
 django = "*"
-djangorestframework = "*"
-django-crispy-forms = "*"
 django-extensions = "*"
+djangorestframework = "*"
 psycopg2 = "*"
 pillow = "*"
-requests = "*"
-notebook = "*"
-circus = "*"
-chaussette = "*"
+django-crispy-forms = "*"
+django-cors-headers = "*"
+ipython = "*"
 
 [dev-packages]
-ipython = "*"
-pygraphviz = "*"
+ipdb = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.9"

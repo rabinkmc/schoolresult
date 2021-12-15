@@ -4,13 +4,15 @@ from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy,reverse
 from django.db.models import Sum,Count,Avg,Min,Max
 from rest_framework import generics
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.db.models import Sum, Avg
 from django.http import HttpResponse 
 
-from result.models import Student, Teacher, Subject,Mark
-from result.serializers import StudentSerializer, TeacherSerializer, SubjectSerializer, MarkSerializer, ResultSerializer
+from result.models import Student, Teacher, Subject,Mark, TestModel
+from result.serializers import (StudentSerializer, TeacherSerializer,
+SubjectSerializer, MarkSerializer, ResultSerializer, TestModelSerializer )
 
 from result.forms import StudentForm,TeacherForm, SubjectForm
 from result.readcsv import read_csv
@@ -141,8 +143,6 @@ def updatemarks(request, **kwargs):
     teacher =get_object_or_404(Teacher, pk=6)
     return HttpResponse(f'<h1>{teacher}</h1>')
 
-
-
 def result(request, *args, **kwargs):
     student = Student.objects.get(**kwargs)
     context = {}
@@ -153,3 +153,24 @@ def result(request, *args, **kwargs):
 
     return render(request, 'result/result.html', context)
 
+class TestDetail(APIView):
+    def get(self, request):
+        tests = TestModel.objects.all()
+        serializer = TestModelSerializer(tests,many=True)
+        return Response(serializer.data)
+
+    def post(self,request):
+        serializer = TestModelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        test = self.get_object(pk)
+        serializer = TestModelSerializer(test, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
