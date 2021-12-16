@@ -24,9 +24,9 @@ from rest_framework import viewsets
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
-        'students': reverse('api-student-list', request=request, format=format),
-        'teachers': reverse('api-teacher-list', request=request, format=format), 
-        'subjects': reverse('api-subject-list', request=request, format=format)
+        'students': reverse('student-list', request=request, format=format),
+        'teachers': reverse('teacher-list', request=request, format=format), 
+        'subjects': reverse('subject-list', request=request, format=format)
     })
 
 class SubjectViewSet(viewsets.ModelViewSet):

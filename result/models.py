@@ -22,7 +22,7 @@ class AbstractNameSlug(models.Model):
                 }
         cls = self.__class__.__name__.lower()
 
-        return reverse(f'api-{cls}-detail', kwargs=kwargs)
+        return reverse(f'{cls}-detail', kwargs=kwargs)
 
     def save(self, *args, **kwargs):
         value = self.name

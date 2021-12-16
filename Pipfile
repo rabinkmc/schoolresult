@@ -12,6 +12,7 @@ pillow = "*"
 django-crispy-forms = "*"
 django-cors-headers = "*"
 ipython = "*"
+djangorestframework-jwt = "*"
 
 [dev-packages]
 ipdb = "*"
