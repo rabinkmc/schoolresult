@@ -3,7 +3,9 @@ from django.urls import path
 from result import views 
 
 urlpatterns = [  
-        path('api/v1/student/',  views.StudentList.as_view(),name='api-student-list'), 
+        path('', views.api_root, name='api-root'), 
+
+        path('api/v1/student/',  views.StudentListCreate.as_view(),name='api-student-list'), 
         path('api/v1/subject/',  views.SubjectList.as_view(),name='api-subject-list'), 
         path('api/v1/teacher/',  views.TeacherList.as_view(),name='api-teacher-list'), 
 
@@ -15,3 +17,4 @@ urlpatterns = [
         path('api/v1/test/', views.TestDetail.as_view(), name='api-test'),
 
 ] 
+

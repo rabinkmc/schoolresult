@@ -17,6 +17,9 @@ SubjectSerializer, MarkSerializer, ResultSerializer, TestModelSerializer )
 from result.forms import StudentForm,TeacherForm, SubjectForm
 from result.readcsv import read_csv
 from rest_framework.reverse import reverse
+from rest_framework import permissions
+from result.permissions import ReadOnlyOrStaff
+
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
@@ -25,33 +28,44 @@ def api_root(request, format=None):
         'subjects': reverse('api-subject-list', request=request, format=format)
     })
 
-class StudentList(generics.ListCreateAPIView):
+class StudentListCreate(generics.ListCreateAPIView):
+    permission_classes = [ReadOnlyOrStaff]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [ReadOnlyOrStaff]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 class TeacherList(generics.ListCreateAPIView):
+    queryset = Student.objects.all()
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
 
 class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [ReadOnlyOrStaff]
+    queryset = Student.objects.all()
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
 
     
 class SubjectList(generics.ListCreateAPIView):
+    permission_classes = [ReadOnlyOrStaff]
+    queryset = Student.objects.all()
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
 
 class SubjectDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [ReadOnlyOrStaff]
+    queryset = Student.objects.all()
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
 
 
 class Result(APIView):
+    permission_classes = [ReadOnlyOrStaff]
+    queryset = Student.objects.all()
     def get_object(self, pk):
         try:
             return Student.objects.get(pk=pk)
