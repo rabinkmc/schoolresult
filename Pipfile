@@ -13,6 +13,7 @@ django-crispy-forms = "*"
 django-cors-headers = "*"
 ipython = "*"
 djangorestframework-jwt = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 ipdb = "*"
