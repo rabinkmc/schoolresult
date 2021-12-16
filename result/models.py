@@ -19,11 +19,10 @@ class AbstractNameSlug(models.Model):
     def get_absolute_url(self):
         kwargs = { 
                 'pk': self.id, 
-                'slug': self.slug
                 }
         cls = self.__class__.__name__.lower()
 
-        return reverse(f'{cls}-pk-slug-detail', kwargs=kwargs)
+        return reverse(f'api-{cls}-detail', kwargs=kwargs)
 
     def save(self, *args, **kwargs):
         value = self.name

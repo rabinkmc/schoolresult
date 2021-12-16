@@ -16,82 +16,14 @@ SubjectSerializer, MarkSerializer, ResultSerializer, TestModelSerializer )
 
 from result.forms import StudentForm,TeacherForm, SubjectForm
 from result.readcsv import read_csv
-
-def home(request):
-    return render(request, 'result/home.html')
-
-class StudentListView(ListView):
-    model = Student
-    paginate_by = 10
-
-class SubjectListView(ListView):
-    model = Subject
-
-class TeacherListView(ListView):
-    model = Teacher
-
-class StudentDetailView(DetailView):
-    model = Student
-
-class TeacherDetailView(DetailView):
-    model = Teacher
-
-class SubjectDetailView(DetailView):
-    model = Subject
-
-class StudentCreateView(CreateView):
-    model = Student
-    form_class = StudentForm
-
-class SubjectCreateView(CreateView):
-    model = Subject
-    form_class = SubjectForm
-    
-class TeacherCreateView(CreateView):
-    model = Teacher
-    form_class = TeacherForm
-
-    # def get_success_url(self):
-    #     self.object.get_records()
-    #     return super().get_success_url(self)
-
-class StudentDeleteView(DeleteView):
-    model = Student
-    success_url = reverse_lazy('student-list')
-
-class SubjectDeleteView(DeleteView):
-    model = Subject
-    success_url = reverse_lazy('subject-list')
-
-class TeacherDeleteView(DeleteView):
-    model = Teacher
-    success_url = reverse_lazy('teacher-list')
-
-class StudentUpdateView(UpdateView):
-    model = Student
-    form_class = StudentForm
-
-
-class SubjectUpdateView(UpdateView):
-    model = Subject
-    form_class = SubjectForm
-
-class TeacherUpdateView(UpdateView):
-    model = Teacher
-    form_class = TeacherForm
-
-class MarkCreateView(CreateView):
-    model = Mark
-    fields =['subject', 'student', 'marks']
-    template_name = 'result/student_form.html'
-
-
-class MarkUpdateView(UpdateView):
-    model = Mark
-    fields =['subject', 'student', 'marks']
-    template_name = 'result/student_form.html'
-
-    success_url = reverse_lazy('student-list')
+from rest_framework.reverse import reverse
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'students': reverse('api-student-list', request=request, format=format),
+        'teachers': reverse('api-teacher-list', request=request, format=format), 
+        'subjects': reverse('api-subject-list', request=request, format=format)
+    })
 
 class StudentList(generics.ListCreateAPIView):
     queryset = Student.objects.all()
@@ -130,28 +62,6 @@ class Result(APIView):
         student = self.get_object(pk)
         serializer = ResultSerializer(student)
         return Response(serializer.data)
-
-def updatemarks(request, **kwargs):
-    '''
-    This view will be associated with teacher.
-
-    ideally i would want this to be a post save or save method , as soon
-    as teacher uploads the file, i want the marks to be changed. For
-    now, i will create a button.
-    '''
-
-    teacher =get_object_or_404(Teacher, pk=6)
-    return HttpResponse(f'<h1>{teacher}</h1>')
-
-def result(request, *args, **kwargs):
-    student = Student.objects.get(**kwargs)
-    context = {}
-    context['student'] = student
-    context['subjects'] = student.mark_set.all()
-    context['marks'] = student.mark_set.aggregate(marks = Sum('marks')).get('marks')
-    context['percentage'] = round(student.mark_set.aggregate(total =Avg('marks')).get('total'),2)
-
-    return render(request, 'result/result.html', context)
 
 class TestDetail(APIView):
     def get(self, request):
