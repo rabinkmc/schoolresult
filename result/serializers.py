@@ -31,6 +31,14 @@ class StudentSerializer(serializers.ModelSerializer):
     def get_subjects(self, object):
         return object.subjects.all().values_list('name', flat=True)
 
+    def get_fields(self):
+        fields = super().get_fields()
+
+        if self.context['request'].method in ['PUT', 'PATCH']:
+            fields.pop("id", None)
+
+        return fields
+
 
 class MarkSerializer(serializers.ModelSerializer):
     subject =serializers.StringRelatedField()

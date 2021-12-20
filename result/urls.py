@@ -10,4 +10,5 @@ router.register(r'subjects', views.SubjectViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('result/<int:pk>',views.Result.as_view(), name='result')
 ]
